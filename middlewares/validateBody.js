@@ -3,6 +3,12 @@ const { HttpError } = require("../helpers");
 const validateBody = (schema) => {
   const func = (req, res, next) => {
     const body = req.body;
+    if (
+      req.route.path === "/:contactId/favorite" &&
+      !Object.keys(body).length
+    ) {
+      next(HttpError(400, "missing field favorite"));
+    }
     if (!Object.keys(body).length) {
       next(HttpError(400, "missing fields"));
     }
