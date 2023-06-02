@@ -11,10 +11,14 @@ const validateBody = (schema) => {
       next(HttpError(400, "missing fields"));
     }
     const { error } = schema.validate(req.body);
+    console.log(path);
+    // if (error && path === "/") {
+    //   next(
+    //     HttpError(400, `missing required ${error.details[0].path[0]} field`)
+    //   );
+    // }
     if (error) {
-      next(
-        HttpError(400, `missing required ${error.details[0].path[0]} field`)
-      );
+      next(HttpError(400, error.message));
     }
     next();
   };
