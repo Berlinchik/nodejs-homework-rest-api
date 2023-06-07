@@ -96,7 +96,11 @@ const updateAvatar = async (req, res) => {
   const resultUpload = path.join(avatarsDir, fileName);
 
   // Обробка аватарки та зміна розмірів
-  await Jimp.read(tempUpload).resize(250, 250).write(resultUpload);
+  await Jimp.read(tempUpload)
+    .then((img) => img.resize(250, 250).write(resultUpload))
+    .catch((err) => {
+      console.error(err);
+    });
   await fs.unlink(tempUpload); // Видалення тимчасового файлу
 
   const avatarURL = path.join("avatars", fileName);
