@@ -7,6 +7,9 @@ const validateBody = (schema) => {
     if (path === "/:contactId/favorite" && !Object.keys(body).length) {
       next(HttpError(400, "missing field favorite"));
     }
+    if (path === "/verify" && !Object.keys(body).length) {
+      next(HttpError(400, "missing required field email"));
+    }
     if (!Object.keys(body).length) {
       next(HttpError(400, "missing fields"));
     }
